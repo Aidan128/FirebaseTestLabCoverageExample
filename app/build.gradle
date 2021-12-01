@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 28
+    compileSdk 29
 
     defaultConfig {
         applicationId "com.github.aidan128.coverage1"
         minSdk 28
-        targetSdk 28
+        targetSdk 29
         versionCode 1
         versionName "1.0"
 
