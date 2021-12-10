@@ -69,5 +69,6 @@ task jacocoReport(type: JacocoReport) {
             fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter),
             fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter))
     getExecutionData().setFrom(
-            fileTree(dir: "${buildDir}/outputs/code_coverage", includes: ['*.ec']))
+            fileTree(dir: "${buildDir}/outputs/code_coverage", includes: ['*.ec']),
+            fileTree(dir: "${buildDir}/jacoco", includes: ['*.exec']))
 }
