@@ -6,4 +6,10 @@ class KotlinClass {
 
     fun function2(): Int =
         3 + 3
+
+    fun function3(): Int =
+        4 + 4
+
+    fun function4(): Int =
+        5 + 5
 }

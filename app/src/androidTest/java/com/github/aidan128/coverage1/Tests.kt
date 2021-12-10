@@ -14,4 +14,10 @@ class Tests {
         assertEquals(4, JavaClass().function1())
         assertEquals(4, KotlinClass().function1())
     }
+
+    @Test
+    fun basicTests2() {
+        assertEquals(6, JavaClass().function2())
+        assertEquals(6, KotlinClass().function2())
+    }
 }
