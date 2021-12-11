@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Coverage1"
 include ':app'
+include ':library'
