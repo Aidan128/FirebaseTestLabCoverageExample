@@ -1,0 +1,36 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion '0.8.7'
+}
+
+task jacocoUnifiedReport(type: JacocoReport) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def sourceDirectories = subprojects.collect { subproject ->
+        "${subproject.projectDir}/src/main/java"
+    }
+
+    def classDirectories = subprojects.collect { subproject ->
+        ["${subproject.buildDir}/intermediates/javac/debug", "${subproject.buildDir}/tmp/kotlin-classes/debug"]
+    }.flatten()
+    def classFiles = classDirectories.collect { directory ->
+        def excludesFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+        fileTree(dir: file(directory), excludes: excludesFilter)
+    }
+
+    def executionDirectories = subprojects.collect { subproject ->
+        ["${subproject.buildDir}/outputs/code_coverage", "${subproject.buildDir}/jacoco"]
+    }.flatten()
+    def executionFiles = executionDirectories.collect { directory ->
+        def includesFilter = ['*.ec', '*.exec']
+        fileTree(dir: file(directory), includes: includesFilter)
+    }
+
+    getSourceDirectories().setFrom(sourceDirectories)
+    getClassDirectories().setFrom(classFiles)
+    getExecutionData().setFrom(executionFiles)
+}
