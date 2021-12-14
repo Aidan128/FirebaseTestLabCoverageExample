@@ -1,0 +1,21 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion '0.8.7'
+}
+
+task jacocoReport(type: JacocoReport) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    getSourceDirectories().setFrom("${project.projectDir}/src/main/java")
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    getClassDirectories().setFrom(
+            fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter),
+            fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter))
+    getExecutionData().setFrom(
+            fileTree(dir: "${buildDir}/outputs/code_coverage", includes: ['*.ec']),
+            fileTree(dir: "${buildDir}/jacoco", includes: ['*.exec']))
+}

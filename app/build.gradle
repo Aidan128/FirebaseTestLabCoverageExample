@@ -1,8 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'jacoco'
 }
+
+apply from: '../module-jacoco.gradle'
 
 android {
     compileSdk 30
@@ -52,23 +53,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestUtil 'androidx.test:orchestrator:1.4.0'
-}
-
-task jacocoReport(type: JacocoReport) {
-    group "Coverage"
-    description "Generate XML/HTML code coverage reports"
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    getSourceDirectories().setFrom("${project.projectDir}/src/main/java")
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    getClassDirectories().setFrom(
-            fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter),
-            fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter))
-    getExecutionData().setFrom(
-            fileTree(dir: "${buildDir}/outputs/code_coverage", includes: ['*.ec']),
-            fileTree(dir: "${buildDir}/jacoco", includes: ['*.exec']))
 }
