@@ -14,6 +14,31 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.osacky.fulladle" version "0.17.3"
+}
+
+fladle {
+    serviceAccountCredentials = project.layout.projectDirectory.file("flank-gradle-service-account.json")
+    smartFlankGcsPath = 'gs://flank_data/results/JUnitReport.xml'
+    localResultsDir = 'flankResults'
+    useOrchestrator = true
+    recordVideo = false
+    performanceMetrics = false
+    maxTestShards = 1
+    devices = [
+            [ "model": "Pixel2", "version": "29" ]
+    ]
+    debugApk = project.provider { "${rootProject.projectDir}/app/build/outputs/apk/debug/app-debug.apk" }
+    environmentVariables = [
+            "coverage": "true",
+            "coverageFilePath": "/sdcard/Download/"
+    ]
+    directoriesToPull = [
+            '/sdcard/Download'
+    ]
+}
+
 apply from: 'project-jacoco.gradle'
 
 task clean(type: Delete) {
